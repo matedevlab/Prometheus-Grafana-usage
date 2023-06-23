@@ -5,7 +5,7 @@ from flask import Flask
 app = Flask(__name__)
 
 
-@app.route("/")
+@app.route("/")  # this endpoint will prometheus watches
 def get_host():
     hostname = socket.gethostname()
     return f"The name of the host server is: {hostname}\n"

@@ -1,0 +1,43 @@
+# if you are using minikube as cluster you can reach your application like this: http://<minikube-ip>:<nodeport>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/" # Path where the application exposes metrics
+    prometheus.io/port: "5000" # Port on which Prometheus should scrape metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: mate8817/tinker-tailor-docker-spy:latest
+          ports:
+            - containerPort: 5000 # Port on which the application is listening
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  type: NodePort
+  selector:
+    app: myapp
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+      nodePort: 30000  # Specify the desired node port here
+  
+
+
