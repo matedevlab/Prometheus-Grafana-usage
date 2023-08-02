@@ -1,7 +1,9 @@
-# if u installed prometheus with helm u should run this command after the install: 
-# helm upgrade <release-name> prometheus-community/prometheus --values prometheus-values.yaml
-scrape_configs:
+server:
+  service:
+    type: LoadBalancer
+
+extraScrapeConfigs: |
   - job_name: myapp
-    metrics_path: / # this is my application endpoint what prometheus watches
+    metrics_path: /
     static_configs:
       - targets: ['myapp-service:80']
