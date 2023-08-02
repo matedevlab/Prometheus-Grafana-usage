@@ -30,7 +30,7 @@ kind: Service
 metadata:
   name: myapp-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: myapp
   ports:
@@ -38,6 +38,4 @@ spec:
       port: 80
       targetPort: 5000
       nodePort: 30000  # Specify the desired node port here
-  
-
 
