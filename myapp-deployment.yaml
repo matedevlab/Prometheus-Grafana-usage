@@ -7,7 +7,7 @@ metadata:
     app: myapp
   annotations:
     prometheus.io/scrape: "true"
-    prometheus.io/path: "/" # Path where the application exposes metrics
+    prometheus.io/path: "/metrics" # Path where the application exposes metrics
     prometheus.io/port: "5000" # Port on which Prometheus should scrape metrics
 spec:
   replicas: 1
