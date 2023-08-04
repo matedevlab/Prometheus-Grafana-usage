@@ -4,6 +4,6 @@ server:
 
 extraScrapeConfigs: |
   - job_name: myapp
-    metrics_path: /metrics
+    metrics_path: /
     static_configs:
       - targets: ['myapp-service:80']
