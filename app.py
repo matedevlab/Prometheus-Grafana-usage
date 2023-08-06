@@ -9,7 +9,7 @@ app = Flask(__name__)
 requests_counter = Counter("myapp_requests_total", "Total number of requests")
 
 
-@app.route("/")  # this endpoint will prometheus watches
+@app.route("/")
 def get_host():
     try:
         hostname = socket.gethostname()
@@ -18,7 +18,7 @@ def get_host():
         print(f"Error retrieving hostname: {e}")
 
 
-@app.route("/metrics")
+@app.route("/metrics")  # this endpoint will prometheus watches
 def metrics():
     # Increment the counter metric for each request
     requests_counter.inc()
