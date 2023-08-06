@@ -1,6 +1,6 @@
 # Deploying an Application with Kubernetes and monitoring it with Prometheus and Grafana
 
-This guide walks you through the process of deploying an application with Kubernetes, setting up Prometheus and Grafana for monitoring, and visualizing application data. I already dockerized the application and it is uploaded on my dockerhub repository, so you dont have to worry about it.
+This guide walks you through the process of deploying an application with Kubernetes using Minikube as your cluster, setting up Prometheus and Grafana for monitoring, and visualizing application data. I have already dockerized the application and uploaded it to my Docker Hub repository, so you don't have to worry about that. However, if you're interested in the application itself or the base of a Docker image, you can check out the 'Dockerfile' and 'app.py'.
 
 ## Task 1: Install Docker
 
