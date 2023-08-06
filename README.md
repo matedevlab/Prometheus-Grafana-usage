@@ -2,7 +2,7 @@
 
 This guide walks you through the process of deploying an application with Kubernetes, setting up Prometheus and Grafana for monitoring, and visualizing application data. I already dockerized the application and it is uploaded on my dockerhub repository, so you dont have to worry about it.
 
-## Task 1: Dockerize the Application and Install Docker
+## Task 1: Install Docker
 
 1. Follow the guide to [Install Docker](https://petri.com/install-docker-ubuntu/).
 
@@ -51,7 +51,7 @@ Access Grafana and Import Dashboard:
 - Click on "Dashboards" in the side menu.
 - Click on "New" to create a new dashboard.
 - Click on "Import" to import a dashboard.
-- Copy the ID of the dashboard from this link: (https://grafana.com/grafana/dashboards/11663-k8s-cluster-metrics/).
+- Copy the ID of the dashboard from this link:[dashboard_id] (https://grafana.com/grafana/dashboards/11663-k8s-cluster-metrics/).
 - Go back to Grafana and paste the copied dashboard ID.
 - Click "Load" to load the dashboard.
 - Under the "prometheus" option, select your previously created datasource named "Prometheus" (default name unless you changed it).
