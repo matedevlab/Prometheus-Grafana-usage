@@ -61,5 +61,3 @@ You're done! Your application data can now be monitored and visualized using Gra
 ## Conclusion
 
 By following these steps, you have successfully deployed an application with Kubernetes, set up Prometheus and Grafana for monitoring, and visualized application data.
-
-For more details and specific commands, refer to the comments in the code.
