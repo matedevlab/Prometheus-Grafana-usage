@@ -1,4 +1,4 @@
-# Dockerizing and Deploying an Application with Kubernetes, Prometheus, and Grafana
+# Deploying an Application with Kubernetes and monitoring it with Prometheus and Grafana
 
 This guide walks you through the process of deploying an application with Kubernetes, setting up Prometheus and Grafana for monitoring, and visualizing application data. I already dockerized the application and it is uploaded on my dockerhub repository, so you dont have to worry about it.
 
