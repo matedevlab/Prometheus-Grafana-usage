@@ -1,48 +1,65 @@
-# Tinker Tailor Docker Spy
+# Dockerizing and Deploying an Application with Kubernetes, Prometheus, and Grafana
 
-## Story
+This guide walks you through the process of deploying an application with Kubernetes, setting up Prometheus and Grafana for monitoring, and visualizing application data. I already dockerized the application and it is uploaded on my dockerhub repository, so you dont have to worry about it.
 
-Basically, you got the million dollar idea. It is an application that you made in codecool a while back. However, as every application needs to run somewhere constantly, and as they require a a bigger amount of resources, your laptop just won't cut it. And that is why you're thinking about moving it to cloud. Managing projects on a bigger scale requires cooperation. Even from people you don't know! Using packages from other open source projects could accelerate your progress quite a bit. So you should use other people's packages for Kubernetes deployments. As you can't do those with the default Kubernetes configuration files, how you might ask? The answer is Helm.
+## Task 1: Dockerize the Application and Install Docker
 
-## What are you going to learn?
+1. Follow the guide to [Install Docker](https://petri.com/install-docker-ubuntu/).
 
-- How to dockerize your application
-- Host your application on k8s
-- How to build a monitoring stack for your app in k8s
-- Use helm effectively to install software to your cluster
+## Task 2: Deploy Resources with Kubernetes
 
-## Tasks
+1. Install `kubectl` by following the Kubernetes [installation guide](https://kubernetes.io/docs/tasks/tools/).
+2. Install Minikube using [these instructions](https://minikube.sigs.k8s.io/docs/start/).
+3. Start Minikube: Run `minikube start`.
+4. Deploy your application using Kubernetes: Run `kubectl apply -f myapp-deployment.yaml`.
 
-1. Dockerize an application from any of your projects. It could be any backend project with an endpoint, that can handle requests, and gives back a response.
-    - The application runs successfully inside the container.
+## Task 3: Visualize Application Data
 
-2. Upload your image to a registry. 
-    - The image can be found in the registry.
+1. Run `minikube tunnel` to create a network tunnel to your Minikube cluster.
+2. Install Helm by following the [installation guide](https://helm.sh/docs/intro/install/).
+3. Add the Prometheus Helm repository: `helm repo add prometheus-community https://prometheus-community.github.io/helm-charts`.
+4. Update the Helm repositories: `helm repo update`.
+5. Install Prometheus using Helm: `helm install --values=prometheus-values.yaml prometheus prometheus-community/prometheus`.
+6. Add the Grafana Helm repository: `helm repo add grafana https://grafana.github.io/helm-charts`.
+7. Update the Helm repositories: `helm repo update`.
+8. Install Grafana using Helm: `helm install --values=grafana-values.yaml grafana grafana/grafana`.
 
-3. Create a k8s yaml config file for your application, and deploy it to the cluster, along with Prometheus and Grafana.
-    - Your application, Prometheus, Grafana are in a running state inside the cluster.
+## Task 4: Access Monitoring and Visualize Data
 
-4. Configure your metrics stack to monitor your application, and check it along with your app.
-    - The monitoring information about your application can be successfully checked, and your app also returns a response after calling the endpoint.
+Run `kubectl get svc` to find the external IP of your application, Grafana, and Prometheus.
 
-5. Upgrade your k8s config files to use Helm
-    - Your application, Prometheus, Grafana are in a running state inside the cluster.
+Access Prometheus Monitoring:
+- Open a web browser and type the external IP of the prometheus-server.
+- Click on the "Status" option in the navigation menu.
+- Click on "Targets" to view the target status.
+- Search for "myapp". If you can see it marked as "UP," your application is healthy.
+- Click on "Graph" next to the "Status" in the navigation menu.
+- Start typing "my" and choose "myapp_requests_total" from the suggestions.
+- Next to the "Table", select "Graph" as the visualization type.
+- Click "Execute" on the right side. You will see a graph displaying the total requests from the myapp-service_external_ip/metrics endpoint.
 
-## General requirements
+Access Grafana and Import Dashboard:
+- In your browser, type the external IP of the grafana server.
+- Log in using the username "admin."
+- Retrieve your Grafana admin password by running this command in your terminal: `kubectl get secret grafana -o=jsonpath='{.data.admin-password}' | base64 --decode`
+- Copy the password without the '%' at the end.
+- In Grafana, click on the top left toggle menu.
+- Click on "Connections".
+- Search for "Prometheus" and click on it.
+- In the HTTP URL field, enter the URL of the prometheus-server: http://the_external_ip_of_prometheus-server.
+- Save and exit the configuration.
+- Click on "Dashboards" in the side menu.
+- Click on "New" to create a new dashboard.
+- Click on "Import" to import a dashboard.
+- Copy the ID of the dashboard from this link: (https://grafana.com/grafana/dashboards/11663-k8s-cluster-metrics/).
+- Go back to Grafana and paste the copied dashboard ID.
+- Click "Load" to load the dashboard.
+- Under the "prometheus" option, select your previously created datasource named "Prometheus" (default name unless you changed it).
+- Click "Import" and your dashboard is now available for visualization.
+You're done! Your application data can now be monitored and visualized using Grafana.
 
-None
+## Conclusion
 
-## Hints
+By following these steps, you have successfully deployed an application with Kubernetes, set up Prometheus and Grafana for monitoring, and visualized application data.
 
-- Use EKS instead of minikube for making sure that you don't have to host your cluster locally
-- Use ECR for your repository to store your images
-- With Helm, you don't need the source code of the package to install it on your cluster. E.g. you can install Prometheus with ```helm upgrade --install prometheus prometheus-community/prometheus```
-- If you need to include your own variables as arguments to a Helm package, you can use the ```-f``` flag. E.g. ```helm upgrade --install prometheus prometheus-community/prometheus -f values-$BUILD_ENVIRONMENT.yaml```
-- Similar to the ```-f``` flag, you can also include arguments straight from the command line, as opposed to from a yaml file with the ```--set``` flag.
-
-## Background materials
-
-- <i class="far fa-exclamation"></i> [Grafana dashboards](https://grafana.com/grafana/dashboards)
-- <i class="far fa-exclamation"></i> [Introduction to Helm page](project/curriculum/materials/pages/devops/introduction-to-helm.md)
-- <i class="far fa-book-open"></i> [Helm chart template](https://helm.sh/docs/chart_template_guide/)
-- <i class="far fa-exclamation"></i> [Helm vs Kubectl](https://medium.com/@RedBaronDr1/helm-vs-kubectl-5aaf2dba7d71)
+For more details and specific commands, refer to the comments in the code.
