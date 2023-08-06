@@ -4,7 +4,7 @@ This guide walks you through the process of deploying an application with Kubern
 
 ## Task 1: Install Docker
 
-1. Follow the guide to [Install Docker](https://petri.com/install-docker-ubuntu/).
+1. Follow the guide to [Install Docker](https://docs.docker.com/engine/install/).
 
 ## Task 2: Deploy Resources with Kubernetes
 
