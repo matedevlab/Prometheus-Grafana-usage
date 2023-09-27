@@ -2,18 +2,18 @@
 
 This guide walks you through the process of deploying an application with Kubernetes using Minikube as your cluster, setting up Prometheus and Grafana for monitoring, and visualizing application data. I have already dockerized the application and uploaded it to my Docker Hub repository, so you don't have to worry about that. However, if you're interested in the application itself or the base of a Docker image, you can check out the 'Dockerfile' and 'app.py'.
 
-## Task 1: Install Docker
+## Install Docker
 
 1. Follow the guide to [Install Docker](https://docs.docker.com/engine/install/).
 
-## Task 2: Deploy Resources with Kubernetes
+## Deploy Resources with Kubernetes
 
 1. Install `kubectl` by following the Kubernetes [installation guide](https://kubernetes.io/docs/tasks/tools/).
 2. Install Minikube using [these instructions](https://minikube.sigs.k8s.io/docs/start/).
 3. Start Minikube: Run `minikube start`.
 4. Deploy your application using Kubernetes: Run `kubectl apply -f myapp-deployment.yaml`.
 
-## Task 3: Visualize Application Data
+## Visualize Application Data
 
 1. Run `minikube tunnel` to create a network tunnel to your Minikube cluster.
 2. Install Helm by following the [installation guide](https://helm.sh/docs/intro/install/).
@@ -24,11 +24,11 @@ This guide walks you through the process of deploying an application with Kubern
 7. Update the Helm repositories: `helm repo update`.
 8. Install Grafana using Helm: `helm install --values=grafana-values.yaml grafana grafana/grafana`.
 
-## Task 4: Access Monitoring and Visualize Data
+## Access Monitoring and Visualize Data
 
 Run `kubectl get svc` to find the external IP of your application(myapp-service), Grafana(grafana), and Prometheus(prometheus-server).
 
-Access Prometheus Monitoring:
+**Access Prometheus Monitoring:**
 - Open a web browser and type the external IP of the prometheus-server.
 - Click on the "Status" option in the navigation menu.
 - Click on "Targets" to view the target status.
@@ -38,7 +38,7 @@ Access Prometheus Monitoring:
 - Next to the "Table", select "Graph" as the visualization type.
 - Click "Execute" on the right side. You will see a graph displaying the total requests from the myapp-service_external_ip/metrics endpoint.
 
-Access Grafana and Import Dashboard:
+**Access Grafana and Import Dashboard:**
 - In your browser, type the external IP of the grafana server.
 - Log in using the username "admin."
 - Retrieve your Grafana admin password by running this command in your terminal: `kubectl get secret grafana -o=jsonpath='{.data.admin-password}' | base64 --decode`
